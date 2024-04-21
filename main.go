@@ -19,18 +19,18 @@ func main() {
 
 	r.HandleFunc("/carrera", routes.GetCarrerasHandler).Methods("GET")
 	r.HandleFunc("/carrera/{id}", routes.GetCarreraHandler).Methods("GET")
-    r.HandleFunc("/carrera", routes.PostCarreraHandler).Methods("POST")
-    r.HandleFunc("/carrera/{id}", routes.DeleteCarreraHandler).Methods("DELETE")
+        r.HandleFunc("/carrera", routes.PostCarreraHandler).Methods("POST")
+        r.HandleFunc("/carrera/{id}", routes.DeleteCarreraHandler).Methods("DELETE")
 
 	r.HandleFunc("/especialidad", routes.GetEspecialidadesHandler).Methods("GET")
-    r.HandleFunc("/especialidad/{id}", routes.GetEspecialidadHandler).Methods("GET")
-    r.HandleFunc("/especialidad", routes.PostEspecialidadHandler).Methods("POST")
-    r.HandleFunc("/especialidad/{id}", routes.DeleteEspecialidadHandler).Methods("DELETE")
+        r.HandleFunc("/especialidad/{id}", routes.GetEspecialidadHandler).Methods("GET")
+        r.HandleFunc("/especialidad", routes.PostEspecialidadHandler).Methods("POST")
+        r.HandleFunc("/especialidad/{id}", routes.DeleteEspecialidadHandler).Methods("DELETE")
 
 	r.HandleFunc("/materia", routes.GetMateriasHandler).Methods("GET")
-    r.HandleFunc("/materia/{id}", routes.GetMateriaHandler).Methods("GET")
-    r.HandleFunc("/materia", routes.PostMateriaHandler).Methods("POST")
-    r.HandleFunc("/materia/{id}", routes.DeleteMateriaHandler).Methods("DELETE")
+        r.HandleFunc("/materia/{id}", routes.GetMateriaHandler).Methods("GET")
+        r.HandleFunc("/materia", routes.PostMateriaHandler).Methods("POST")
+        r.HandleFunc("/materia/{id}", routes.DeleteMateriaHandler).Methods("DELETE")
 
 	http.ListenAndServe(":4000", r)
 }

@@ -2,9 +2,13 @@ package models
 
 import "gorm.io/gorm"
 
-type Especialidades struct {
+type Materias struct {
     gorm.Model
-    Especialidad string  `gorm:"type:varchar(255); not null" json:"Especialidad"`
-    CarreraID  uint  `json:"Id_Carrera"`
-    Materias []Materias `gorm:"foreignKey:CarreraID" json:"Materias"`
+    Semestre  int `gorm:"not null" json:"Semestre"`
+    Materia string `gorm:"type:varchar(255); not null" json:"Materia"`
+    Creditos int `gorm:"not null" json:"Creditos"`
+    CarreraID uint `json:"Id_Carrera"`
+    EspecialidadID *uint  `json:"Id_Especialidad"`
+    
+    
 }

@@ -3,6 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                git 'https://github.com/ErikaRguez/API-Rest.git'
                 sh 'go build -o myapp'
             }
         }

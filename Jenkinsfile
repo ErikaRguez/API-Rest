@@ -3,20 +3,26 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                git 'https://github.com/ErikaRguez/API-Rest.git'
+                echo 'Cloning repository...'
+                git branch: 'main', url: 'https://github.com/ErikaRguez/API-Rest.git'
                 sh 'go build -o myapp'
             }
         }
         stage('Test') {
             steps {
+                echo 'Running tests...'
                 sh 'go test ./...'
             }
         }
         stage('Deploy') {
             steps {
+                echo 'Building Docker image...'
                 sh 'docker build -t myapp .'
+                echo 'Starting Docker container...'
                 sh 'docker-compose up -d'
             }
         }
     }
 }
+
+

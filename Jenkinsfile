@@ -15,10 +15,10 @@ pipeline {
         }
         stage('Deploy to Kubernetes') {
             steps {
-                echo 'Deploying to kubernetes...'
-                sh 'kubectl apply -f k8s/deployment.yaml'
-                sh 'kubectl apply -f k8s/service.yaml'
-                sh 'kubectl apply -f k8s/ingress.yaml'
+                echo 'Deploying to Kubernetes...'
+                sh 'kubectl apply -f kubernetes/deployment.yaml'
+                sh 'kubectl apply -f kubernetes/service.yaml'
+                sh 'kubectl apply -f kubernetes/ingress.yaml'
             }
         }
     }

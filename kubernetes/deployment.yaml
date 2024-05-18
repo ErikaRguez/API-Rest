@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: api-deployment
   labels:
-     app: api
+    app: api
 spec:
   replicas: 3
   selector:
@@ -14,27 +14,27 @@ spec:
       labels:
         app: api
     spec:
-      initcontainers:
+      initContainers:
       - name: build
         image: golang:latest
         command: ['sh', '-c', 'cd /app && go build -o /server']
         volumeMounts:
-        -name: app-source
-         mountPath: /app
+        - name: app-source
+          mountPath: /app
       containers:
-       -name: api
+      - name: api
         image: golang:latest
         command: ["/server"]
         ports:
-        -containerPort: 4000
+        - containerPort: 4000
         env:
-        -name: DATABASE_DNS
-         value: "host=172.17.0.2 user=postgres password=password dbname=universidad port=5432"
+        - name: DATABASE_DNS
+          value: "host=172.17.0.2 user=postgres password=password dbname=universidad port=5432"
         volumeMounts:
-        -name: app-source
-         mountPath: /app
-       volumes:
-       -name: app-source
+        - name: app-source
+          mountPath: /app
+      volumes:
+      - name: app-source
         gitRepo:
-        repository: https://github.com/ErikaRguez/API-Rest.git
-        revision: main
+          repository: https://github.com/ErikaRguez/API-Rest.git
+          revision: main

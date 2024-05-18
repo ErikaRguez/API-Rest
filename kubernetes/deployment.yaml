@@ -35,7 +35,7 @@ spec:
         -name: app-source
          mountPath: /app
        volumes:
-       -name: app/source
+       -name: app-source
         gitRepo:
         repository: https://github.com/ErikaRguez/API-Rest.git
         revision: main

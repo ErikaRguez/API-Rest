@@ -1,11 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Clone Repository') {
             steps {
                 echo 'Cloning repository...'
                 git branch: 'main', url: 'https://github.com/ErikaRguez/API-Rest.git'
-                sh 'go build -o myapp'
             }
         }
         stage('Test') {
@@ -14,15 +13,13 @@ pipeline {
                 sh 'go test ./...'
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Kubernetes') {
             steps {
-                echo 'Building Docker image...'
-                sh 'docker build -t myapp .'
-                echo 'Starting Docker container...'
-                sh 'docker-compose up -d'
+                echo 'Deploying to kubernetes...'
+                sh 'kubectl apply -f k8s/deployment.yaml'
+                sh 'kubectl apply -f k8s/service.yaml'
+                sh 'kubectl apply -f k8s/ingress.yaml'
             }
         }
     }
 }
-
-

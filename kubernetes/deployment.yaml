@@ -1,1 +1,41 @@
 
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appi-deployment
+  labels:
+     app: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      initcontainers:
+      - name: build
+        image: golang:latest
+        command: ['sh', '-c', 'cd /app && go build -o /server']
+        volumeMounts:
+        -name: app-source
+         mountPath: /app
+      containers:
+       -name: api
+        image: golang:latest
+        command: ["/server"]
+        ports:
+        -containerPort: 4000
+        env:
+        -name: DATABASE_DNS
+         value: "host=172.17.0.2 user=postgres password=password dbname=universidad port=5432"
+        volumeMounts:
+        -name: app-source
+         mountPath: /app
+       volumes:
+       -name: app/source
+        gitRepo:
+        repository: https://github.com/ErikaRguez/API-Rest.git
+        revision: main

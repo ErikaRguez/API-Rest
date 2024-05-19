@@ -14,27 +14,11 @@ spec:
       labels:
         app: api
     spec:
-      initContainers:
-      - name: build
-        image: golang:latest
-        command: ['sh', '-c', 'cd /app && go build -o /server']
-        volumeMounts:
-        - name: app-source
-          mountPath: /app
       containers:
       - name: api
-        image: golang:latest
-        command: ["/server"]
+        image: ivonnerodriguez0818/api-rest:latest
         ports:
         - containerPort: 4000
         env:
         - name: DATABASE_DNS
           value: "host=172.17.0.2 user=postgres password=password dbname=universidad port=5432"
-        volumeMounts:
-        - name: app-source
-          mountPath: /app
-      volumes:
-      - name: app-source
-        gitRepo:
-          repository: https://github.com/ErikaRguez/API-Rest.git
-          revision: main

@@ -1,37 +1,25 @@
 pipeline {
     agent any
-
-    environment {
-        DOCKER_IMAGE = "ivonnerodriguez0818/api-rest:latest"
-    }
-
     stages {
-        stage('Clone Repository') {
+        stage('Build') {
             steps {
                 echo 'Cloning repository...'
                 git branch: 'main', url: 'https://github.com/ErikaRguez/API-Rest.git'
+                sh 'go build -o appi'
             }
         }
-
         stage('Test') {
             steps {
                 echo 'Running tests...'
                 sh 'go test ./...'
             }
         }
-
-        stage('Deploy to Kubernetes') {
+        stage('Deploy') {
             steps {
-                echo 'Updating Kubernetes manifests...'
-                script {
-                    sh """
-                    sed -i 's|image: .*|image: ${DOCKER_IMAGE}|' kubernetes/deployment.yaml
-                    """
-                }
-                echo 'Deploying to Kubernetes...'
-                sh 'kubectl apply -f kubernetes/deployment.yaml'
-                sh 'kubectl apply -f kubernetes/service.yaml'
-                sh 'kubectl apply -f kubernetes/ingress.yaml'
+                echo 'Building Docker image...'
+                sh 'docker build -t myapp .'
+                echo 'Starting Docker container...'
+                sh 'docker-compose up -d'
             }
         }
     }
